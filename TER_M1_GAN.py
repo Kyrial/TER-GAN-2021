@@ -81,10 +81,18 @@ class GAN():
         #(X_train, _), (_, _) = mnist.load_data()  
         #ce qu'on doit modifier !
         (X_train, Y_train), (X_test, Y_test) = mnist.load_data()  
-
+        print("MIAAAAAAAAOUUUUU",Y_train[1])
+        print("MIAAAAAAAAOUUUUU",X_train[1])
         #print( list( filter (lambda x: x <= 1 , Y_train)));
-         
+        
+
+        X_train = map(lambda x, y: x if y <= 1 else None, X_train, Y_train)
+        
         Y_train =  list(filter (lambda x: x <= 1 , Y_train))
+   #    for x in range(len(X_train)):
+    #       if Y_train[x] >1:
+               
+
         
         #print("0 --> ", len(list( filter (lambda x: x == 0 , Y_train))));
         #print("1 --> ", len(list( filter (lambda x: x == 1 , Y_train))));
