@@ -78,9 +78,19 @@ class GAN():
         return Model(img, validity)
 
     def train(self, epochs, batch_size=128, sample_interval=50): 
-        (X_train, _), (_, _) = mnist.load_data()  
+        #(X_train, _), (_, _) = mnist.load_data()  
         #ce qu'on doit modifier !
+        (X_train, Y_train), (X_test, Y_test) = mnist.load_data()  
+
+        #print( list( filter (lambda x: x <= 1 , Y_train)));
+         
+        Y_train =  list(filter (lambda x: x <= 1 , Y_train))
+        
+        #print("0 --> ", len(list( filter (lambda x: x == 0 , Y_train))));
+        #print("1 --> ", len(list( filter (lambda x: x == 1 , Y_train))));
+
         X_train = X_train / 127.5 - 1.
+        print(Y_train[0]);
         X_train = np.expand_dims(X_train, axis=3)
         valid = np.ones((batch_size, 1))
         fake = np.zeros((batch_size, 1))
@@ -128,4 +138,4 @@ class GAN():
 
 if __name__ == '__main__':
     gan = GAN()
-    gan.train(epochs=100000, batch_size=132, sample_interval=50)
+    gan.train(epochs=100000, batch_size=132, sample_interval=100)
