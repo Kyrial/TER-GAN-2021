@@ -86,7 +86,7 @@ class GAN():
         #print( list( filter (lambda x: x <= 1 , Y_train)));
         print( type(X_train))
         
-        filter_arr =  list(filter (lambda x: True if x <= 1 else False, Y_train))
+        filter_arr =  list(map (lambda x: True if x <= 1 else False, Y_train))
 
         X_train= X_train[filter_arr]
         #X_train = np.ndarray((lambda x, y: x if y <= 1 else x, X_train, Y_train))
@@ -97,9 +97,30 @@ class GAN():
                
 
         
-        #print("0 --> ", len(list( filter (lambda x: x == 0 , Y_train))));
-        #print("1 --> ", len(list( filter (lambda x: x == 1 , Y_train))));
+        print("0 --> ", len(list( filter (lambda x: x == 0 , Y_train))));
+        print("1 --> ", len(list( filter (lambda x: x == 1 , Y_train))));
 
+        nbr_0 =  len(list( filter (lambda x: x == 0 , Y_train)));
+        nbr_1 =  len(list( filter (lambda x: x == 1 , Y_train)));
+
+        if nbr_0 > nbr_1:
+            while nbr_0 != nbr_1:
+                ind = Y_train.index(0)
+                Y_train.remove(0)
+                np.delete(X_train, ind,0)
+                nbr_0 = nbr_0 -1
+
+        if nbr_1 > nbr_0:
+            while nbr_1 != nbr_0:
+                ind = Y_train.index(1)
+                Y_train.remove(1)
+                np.delete(X_train, ind,0)
+                nbr_1 = nbr_1 -1
+
+        print("2: 0 --> ", len(list( filter (lambda x: x == 0 , Y_train))));
+        print("2: 1 --> ", len(list( filter (lambda x: x == 1 , Y_train))));
+            
+        
         X_train = X_train / 127.5 - 1.
        
         X_train = np.expand_dims(X_train, axis=3)
